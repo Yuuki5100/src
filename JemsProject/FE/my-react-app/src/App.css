@@ -1,0 +1,108 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.moderation-container {
+  padding: 20px;
+}
+
+.moderation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.moderation-table th, .moderation-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.moderation-table th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.status.pending {
+  background-color: #ffeb3b;
+  color: #ff9800;
+}
+
+.status.approved {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.rejected {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn.approve {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.reject {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn.delete {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

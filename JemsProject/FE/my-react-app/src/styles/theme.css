@@ -1,0 +1,215 @@
+:root {
+  --primary-color: #2e7d32;
+  /* 深い緑 */
+  --secondary-color: #e8f5e9;
+  /* 淡い緑 */
+  --text-color: #333;
+  --bg-color: #fff;
+  --header-height: 60px;
+  --sidebar-width: 200px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #1b5e20;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: var(--secondary-color);
+  cursor: pointer;
+}
+
+input,
+select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dashboard-container {
+  padding: 10px;
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.dashboard-card {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-left: 6px solid var(--primary-color);
+  border-radius: 6px;
+  flex: 1 1 200px;
+  min-width: 200px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: scale(1.03);
+}
+
+.dashboard-card h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.dashboard-card p {
+  font-size: 1.6rem;
+  margin: 10px 0 0;
+  font-weight: bold;
+}
+
+.moderation-container {
+  padding: 20px;
+}
+
+.moderation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.moderation-table th, .moderation-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.moderation-table th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.status.pending {
+  background-color: #ffeb3b;
+  color: #ff9800;
+}
+
+.status.approved {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.rejected {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn.approve {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.reject {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn.delete {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* レスポンシブレイアウト調整 */
+@media (max-width: 768px) {
+  aside {
+    position: absolute;
+    left: -200px;
+    top: var(--header-height);
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  aside.open {
+    left: 0;
+  }
+
+  main {
+    padding: 20px;
+    width: 100%;
+  }
+
+  .hamburger {
+    display: block !important;
+  }
+
+  .card-grid {
+    flex-direction: column;
+  }
+
+  .dashboard-card {
+    width: 100%;
+  }
+
+  .moderation-table th, .moderation-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .moderation-table {
+    font-size: 14px;
+  }
+
+  .status {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 12px;
+  }
+}
