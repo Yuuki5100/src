@@ -2,6 +2,7 @@ package com.example.jems.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,18 @@ public class JwtUtil {
     private String secretKey;
 
     @Value("${jwt.expiration}")
-    private long expiration; // milliseconds
+    private String expirationValue; // ← 文字列で受け取る
+
+    private long expiration; // ← 変換後の値を保持
+
+    @PostConstruct
+    private void init() {
+        try {
+            this.expiration = Long.parseLong(expirationValue);
+        } catch (NumberFormatException e) {
+            this.expiration = 3600000; // fallback: 1時間
+        }
+    }
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
@@ -63,7 +75,6 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // リフレッシュトークンの発行（有効期限長め）
     public String generateRefreshToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
@@ -76,5 +87,4 @@ public class JwtUtil {
     public boolean validateRefreshToken(String token, UserDetails userDetails) {
         return validateToken(token, userDetails);
     }
-
 }

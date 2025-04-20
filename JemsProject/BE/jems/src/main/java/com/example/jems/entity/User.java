@@ -1,6 +1,7 @@
 package com.example.jems.entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +34,6 @@ public class User implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
-    }   
+        return List.of(() -> "ROLE_" + role); // "ROLE_USER" や "ROLE_ADMIN"
+    }
 }
