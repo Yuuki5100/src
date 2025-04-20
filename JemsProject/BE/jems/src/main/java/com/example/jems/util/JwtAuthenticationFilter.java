@@ -1,7 +1,6 @@
 package com.example.jems.util;
 
 import com.example.jems.service.UserService;
-import com.example.jems.util.JwtUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         String authHeader = httpRequest.getHeader("Authorization");
@@ -34,8 +33,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
                 if (jwtUtil.validateToken(token, null)) {
                     var userDetails = userService.loadUserByUsername(username);
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                    );
+                            userDetails, null, userDetails.getAuthorities());
                     auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }

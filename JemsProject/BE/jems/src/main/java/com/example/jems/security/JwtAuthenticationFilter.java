@@ -1,6 +1,5 @@
 package com.example.jems.security;
 
-import com.example.jems.service.CustomUserDetailsService;
 import com.example.jems.service.UserService;
 import com.example.jems.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
