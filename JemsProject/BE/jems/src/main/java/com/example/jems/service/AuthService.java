@@ -66,7 +66,7 @@ public class AuthService {
     // リフレッシュトークン処理
     public AuthResponse refreshToken(String refreshToken) {
         String username = jwtUtil.extractUsername(refreshToken);
-        UserDetails user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!jwtUtil.validateRefreshToken(refreshToken, user)) {

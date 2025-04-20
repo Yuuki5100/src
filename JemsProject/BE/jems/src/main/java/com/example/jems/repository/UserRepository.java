@@ -3,11 +3,10 @@ package com.example.jems.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.jems.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<UserDetails> findByUsername(String username);
+    Optional<User> findByUsername(String username);
     boolean existsByUsername(String username);
 }
