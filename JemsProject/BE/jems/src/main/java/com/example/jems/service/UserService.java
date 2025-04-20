@@ -18,7 +18,7 @@ public class UserService implements UserDetailsService {
     // Spring Security に必要なユーザー情報を返す
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        UserDetails user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         return org.springframework.security.core.userdetails.User
@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public User findByUsername(String username) {
+    public UserDetails findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
     }
 

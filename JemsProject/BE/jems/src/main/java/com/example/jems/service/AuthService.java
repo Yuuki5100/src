@@ -2,7 +2,6 @@ package com.example.jems.service;
 
 import com.example.jems.dto.AuthResponse;
 import com.example.jems.dto.RegisterRequest;
-import com.example.jems.entity.Role;
 import com.example.jems.dto.AuthRequest;
 import com.example.jems.entity.User;
 import com.example.jems.repository.UserRepository;
@@ -59,7 +58,7 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.valueOf(request.getRole().toUpperCase())); // e.g., USER or ADMIN
+        user.setRole(request.getRole().toUpperCase()); // e.g., USER or ADMIN
 
         userRepository.save(user);
     }
