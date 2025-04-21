@@ -94,7 +94,7 @@ const UserSearchPage: React.FC = () => {
 
 
   return (
-    <MainLayout children={undefined}>
+    <MainLayout>
       <h2>ユーザー検索</h2>
       {/* 検索・フィルター・CSV操作 */}
       <div style={{ marginBottom: '1rem' }}>

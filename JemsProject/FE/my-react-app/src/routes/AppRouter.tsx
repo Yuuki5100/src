@@ -9,8 +9,8 @@ import UserEditPage from '../pages/UserEditPage';
 import AdminDashboard from '../pages/AdminDashboard';
 import UserRoleEditPage from '../pages/UserRoleEditPage';
 import ModerationPage from '../pages/ModerationPage';
-import UnauthorizedPage from '../pages/UnauthorizedPage.tsx';
-import NotFoundPage from '../pages/NotFoundPage.tsx';
+import UnauthorizedPage from '../pages/UnauthorizedPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 
 import PrivateRoute from './PrivateRoute';
@@ -19,15 +19,17 @@ import RoleRoute from '../components/RoleRoute';
 
 
 const AppRouter: React.FC = () => {
-  return (<Routes> {/* ログイン */} <Route path="/login" element={<LoginPage />} />
+  return (<Routes>
+
+    {/* ログイン */}
+    <Route path="/login" element={<LoginPage />} />
 
     {/* ホームリダイレクト（認証後の初期遷移先） */}
-    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+    {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
+    <Route path="/" element={<HomePage />} />
 
     {/* ダッシュボード（ログイン後） */}
-    <Route
-      path="/dashboard"
-      element={
+    <Route path="/dashboard" element={
         <PrivateRoute>
           <DashboardPage />
         </PrivateRoute>

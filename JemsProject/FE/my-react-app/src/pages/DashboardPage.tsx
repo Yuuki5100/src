@@ -34,7 +34,7 @@ const DashboardPage: React.FC = () => {
 
 
     return (
-        <MainLayout children={undefined}>
+        <MainLayout>
             <div className="dashboard-container">
                 <h2>管理者ダッシュボード</h2>
                 {!stats ? (

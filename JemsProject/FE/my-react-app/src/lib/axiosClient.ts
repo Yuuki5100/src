@@ -10,33 +10,24 @@ const axiosClient = axios.create({
 
 // リクエストインターセプター（例：トークン付与）
 axiosClient.interceptors.request.use(
-  config => {
+  (  config: any) => {
     // const token = localStorage.getItem('token');
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`;
     // }
     return config;
   },
-  error => Promise.reject(error)
+  (  error: any) => Promise.reject(error)
 );
 
 // レスポンスインターセプター（共通エラー処理など）
 axiosClient.interceptors.response.use(
-  response => response,
-  error => {
+  (  response: any) => response,
+  (  error: { response: any; message: any; }) => {
     console.error('API Error:', error.response || error.message);
     return Promise.reject(error);
   }
 );
-
-// タイムアウト設定
-const axiosClient = axios.create({
-  baseURL: 'http://localhost:8080/api',
-  timeout: 5000, // 5秒タイムアウト
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
 
 // リトライ設定（最大3回、指数バックオフ）
 axiosRetry(axiosClient, {
@@ -45,14 +36,14 @@ axiosRetry(axiosClient, {
 });
 
 axiosClient.interceptors.request.use(
-  config => {
+  (  config: { headers: { Authorization: string; }; }) => {
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  error => Promise.reject(error)
+  (  error: any) => Promise.reject(error)
 );
 
 export default axiosClient;

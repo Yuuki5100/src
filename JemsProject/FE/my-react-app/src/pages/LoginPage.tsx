@@ -6,11 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
     const dispatch = useAppDispatch();
-    const status = useAppSelector(state => state.auth.status);
+    const status = useAppSelector((state: { auth: { status: any; }; }) => state.auth.status);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const status = useAppSelector(state => state.auth.status);
-    const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+    const isAuthenticated = useAppSelector((state: { auth: { isAuthenticated: any; }; }) => state.auth.isAuthenticated);
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {

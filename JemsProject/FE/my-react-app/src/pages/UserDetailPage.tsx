@@ -8,7 +8,7 @@ import { hasRole } from '../utils/roleUtils';
 const UserDetailPage: React.FC = () => {
   const { id } = useParams();
   const [user, setUser] = useState<any>(null);
-  const { user: authUser } = useAppSelector(state => state.auth);
+  const { user: authUser } = useAppSelector((state: { auth: any; }) => state.auth);
 
   useEffect(() => {
     const fetchUser = async () => {

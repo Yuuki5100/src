@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
 
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { isAuthenticated, user } = useAppSelector(state => state.auth);
+    const { isAuthenticated, user } = useAppSelector((state: { auth: any; }) => state.auth);
 
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;

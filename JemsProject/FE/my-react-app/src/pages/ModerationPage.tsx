@@ -47,7 +47,7 @@ const ModerationPage: React.FC = () => {
   };
 
   return (
-    <MainLayout children={undefined}>
+    <MainLayout>
       <div className="moderation-container">
         <h2>モデレーション</h2>
         

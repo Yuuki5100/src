@@ -7,8 +7,8 @@ import ErrorMessage from '../components/ErrorMessage';
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user.data);
-  const status = useAppSelector(state => state.user.status);
+  const user = useAppSelector((state: { user: { data: any; }; }) => state.user.data);
+  const status = useAppSelector((state: { user: { status: any; }; }) => state.user.status);
 
   useEffect(() => {
     dispatch(getUser());

@@ -7,7 +7,7 @@ type Props = {
 };
 
 const PrivateRoute: React.FC<Props> = ({ children }) => {
-  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+  const isAuthenticated = useAppSelector((state: { auth: { isAuthenticated: any; }; }) => state.auth.isAuthenticated);
   return isAuthenticated ? children : <Navigate to="/" />;
 };
 
