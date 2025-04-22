@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MainLayout from '../components/layout/MainLayout';
 import axiosClient from '../lib/axiosClient';
-import '../styles/dashboard.css';
+import '../styles/theme.css';
 
 
 type DashboardStats = {
