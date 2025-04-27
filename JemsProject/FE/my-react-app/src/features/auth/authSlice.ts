@@ -23,11 +23,11 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
   'auth/login',
   async (
-    credentials: { email: string; password: string },
+    credentials: { username: string; password: string },
     { rejectWithValue }
   ) => {
     try {
-      const data = await loginApi(credentials.email, credentials.password);
+      const data = await loginApi(credentials.username, credentials.password);
       return data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Login failed');

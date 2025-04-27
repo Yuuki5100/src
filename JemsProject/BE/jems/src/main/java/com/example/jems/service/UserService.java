@@ -2,7 +2,6 @@ package com.example.jems.service;
 
 import com.example.jems.entity.User;
 import com.example.jems.repository.UserRepository;
-import com.example.jems.util.JwtUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -39,6 +38,22 @@ public class UserService implements UserDetailsService {
     }
 
     public void save(User user) {
+        userRepository.save(user);
+    }
+
+    // 新規ユーザー登録処理
+    public void register(User user) {
+        // 既に同じユーザーが存在するかチェック
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+
+        // ユーザーのロール設定
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("USER"); // デフォルトロールを設定
+        }
+
+        // ユーザーをデータベースに保存
         userRepository.save(user);
     }
 

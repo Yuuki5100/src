@@ -10,9 +10,9 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,13 +35,16 @@ public class AuthService {
                         request.getUsername(),
                         request.getPassword()));
 
-        UserDetails user = userRepository.findByUsername(request.getUsername())
+        User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String accessToken = jwtUtil.generateToken(user);
-        String refreshToken = jwtUtil.generateRefreshToken(user);
-
-        return new AuthResponse(accessToken, refreshToken);
+        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            String accessToken = jwtUtil.generateToken(user);
+            String refreshToken = jwtUtil.generateRefreshToken(user);
+            return new AuthResponse(accessToken, refreshToken);
+        } else {
+            throw new BadCredentialsException("Bad credentials");
+        }
     }
 
     // 新規登録処理

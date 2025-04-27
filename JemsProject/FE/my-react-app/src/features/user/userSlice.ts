@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchUser } from '../../api/userApi';
 import { User } from './userTypes';
+import { fetchApi } from '../../api/apiEndPoint';
 
 interface UserState {
   data: User | null;
@@ -13,7 +14,8 @@ const initialState: UserState = {
 };
 
 export const getUser = createAsyncThunk('user/fetchUser', async () => {
-  const data = await fetchUser();
+  //const data = await fetchUser();
+  const data = await fetchApi("home");
   return data;
 });
 

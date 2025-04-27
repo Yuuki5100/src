@@ -1,4 +1,4 @@
-package com.example.jems.repository;
+package com.example.jems.model;
 
 public enum Role {
     USER,

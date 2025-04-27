@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import com.example.jems.repository.ErrorCodeSettingRepository;
 import com.example.jems.repository.UserRepository;
 import com.example.jems.service.ErrorCodeService;
-import com.example.jems.service.UserService;
 import com.example.jems.util.JwtUtil;
 
 @TestConfiguration
@@ -21,11 +20,6 @@ public class MockConfig {
     @Bean
     public UserRepository userRepository() {
         return mock(UserRepository.class);
-    }
-
-    @Bean
-    public UserService userService() {
-        return new UserService(userRepository());
     }
 
     @Bean

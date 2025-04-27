@@ -8,14 +8,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 @Data
@@ -32,8 +34,7 @@ public class User implements UserDetails{
 
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
 
     @Override
@@ -42,12 +43,10 @@ public class User implements UserDetails{
     }
 
     public String getRole() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRole'");
+        return this.role;
     }
 
-    public String setRole(String role) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRole'");
+    public void setRole(String role) {
+        this.role = Role.containRole(role);
     }
 }

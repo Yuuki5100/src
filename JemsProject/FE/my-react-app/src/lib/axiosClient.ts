@@ -20,7 +20,7 @@ axiosClient.interceptors.response.use(
 
 // リトライ設定（最大3回、指数バックオフ）
 axiosRetry(axiosClient, {
-  retries: 3,
+  retries: 1,
   retryDelay: axiosRetry.exponentialDelay,
 });
 

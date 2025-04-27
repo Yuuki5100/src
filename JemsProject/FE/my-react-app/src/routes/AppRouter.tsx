@@ -26,7 +26,7 @@ const AppRouter: React.FC = () => {
 
     {/* ホームリダイレクト（認証後の初期遷移先） */}
     {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
-    <Route path="/" element={<HomePage />} />
+    <Route path="/" element={<LoginPage />} />
 
     {/* ダッシュボード（ログイン後） */}
     <Route path="/dashboard" element={

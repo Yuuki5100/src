@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { login } from '../features/auth/authSlice';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const status = useAppSelector((state: { auth: { status: any; }; }) => state.auth.status);
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const isAuthenticated = useAppSelector((state: { auth: { isAuthenticated: any; }; }) => state.auth.isAuthenticated);
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(login({ email, password }));
+        // ここで email ではなく username を渡すように変更
+        dispatch(login({ username, password }));
     };
 
     useEffect(() => {
@@ -27,10 +27,10 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit}>
             <h2>ログイン</h2>
             <input
-                type="email"
-                placeholder="メールアドレス"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                type="text" // メールアドレスではなく、ユーザ名を入力するために type="text" に変更
+                placeholder="ユーザ名"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
             />
             <input
                 type="password"
