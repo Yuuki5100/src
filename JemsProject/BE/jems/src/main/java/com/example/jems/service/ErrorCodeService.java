@@ -2,18 +2,24 @@ package com.example.jems.service;
 
 import com.example.jems.model.ErrorCodeSettingModel;
 import com.example.jems.model.ErrorCodeId;
-import com.example.jems.repository.ErrorCodeRepository;
+import com.example.jems.repository.ErrorCodeSettingRepository;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Service
 public class ErrorCodeService {
 
     @Autowired
-    private ErrorCodeRepository errorCodeRepository;
+    private ErrorCodeSettingRepository errorCodeRepository;
 
     /**
      * 全てのエラーコードを取得する
@@ -35,12 +41,17 @@ public class ErrorCodeService {
     public Optional<ErrorCodeSettingModel> updateMessage(String code, String locale, String newMessage) {
         ErrorCodeId id = new ErrorCodeId(code, locale);
         Optional<ErrorCodeSettingModel> optional = errorCodeRepository.findById(id);
+        ErrorCodeSettingModel model = optional.get();
+        model.setMessage(newMessage);
         if (optional.isPresent()) {
-            ErrorCodeSettingModel model = optional.get();
-            model.setMessage(newMessage);
             return Optional.of(errorCodeRepository.save(model));
         } else {
-            return Optional.empty(); // 対象が存在しない
+            return Optional.of(errorCodeRepository.save(model));
         }
+    }
+
+    public String reloadErrorCodes(){
+        //return errorCodeRepository.findAll();
+        return "Error codes reloaded successfully.";
     }
 }

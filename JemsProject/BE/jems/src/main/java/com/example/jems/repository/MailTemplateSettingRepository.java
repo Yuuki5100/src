@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MailTemplateRepository extends JpaRepository<MailTemplateSettingModel, MailTemplateId> {
+public interface MailTemplateSettingRepository extends JpaRepository<MailTemplateSettingModel, MailTemplateId> {
     // 必要に応じてカスタムメソッドを定義できます
 }

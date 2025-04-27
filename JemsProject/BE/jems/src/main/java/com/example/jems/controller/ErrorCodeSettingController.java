@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -43,11 +44,12 @@ public class ErrorCodeSettingController {
     public ResponseEntity<ErrorCodeSettingModel> updateErrorCodeMessage(
             @PathVariable String code,
             @RequestParam String locale,
-            @RequestBody String newMessage) {
+            @RequestBody Map<String, String> requestBody) {
 
+        String newMessage = requestBody.get("newMessage");
         Optional<ErrorCodeSettingModel> updated = errorCodeService.updateMessage(code, locale, newMessage);
         return updated.map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**

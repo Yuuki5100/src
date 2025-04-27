@@ -2,6 +2,10 @@ package com.example.jems.service;
 
 import com.example.jems.entity.User;
 import com.example.jems.repository.UserRepository;
+import com.example.jems.util.JwtUtil;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -9,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
 

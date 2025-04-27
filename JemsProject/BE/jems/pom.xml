@@ -87,6 +87,12 @@
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.11.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -106,6 +112,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				    <version>3.2.5</version>
 				<configuration>
 					<excludes>
 						<exclude>
@@ -115,6 +122,18 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- <plugin>
+				<configuration>
+					<include resource="org/springframework/boot/logging/logback/base.xml"/>
+				
+					<logger name="org.hibernate.SQL" level="DEBUG"/>
+					<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+				
+					<root level="INFO">
+						<appender-ref ref="CONSOLE"/>
+					</root>
+				</configuration>
+			</plugin> -->
 		</plugins>
 	</build>
 	<repositories>

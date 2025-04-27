@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class SettingModel {
 
     @Id
-    private String key;
+    private String settingID;
 
     private String value;
 }

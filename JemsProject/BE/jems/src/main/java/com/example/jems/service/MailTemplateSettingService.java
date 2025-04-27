@@ -2,7 +2,7 @@ package com.example.jems.service;
 
 import com.example.jems.model.MailTemplateId;
 import com.example.jems.model.MailTemplateSettingModel;
-import com.example.jems.repository.MailTemplateRepository;
+import com.example.jems.repository.MailTemplateSettingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class MailTemplateSettingService {
 
     @Autowired
-    private MailTemplateRepository mailTemplateRepository;
+    private MailTemplateSettingRepository mailTemplateRepository;
 
     /**
      * 全件取得

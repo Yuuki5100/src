@@ -1,9 +1,15 @@
 package com.example.jems.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class MailTemplateId {
-
-    public MailTemplateId(String templateName, String locale) {
-        //TODO Auto-generated constructor stub
-    }
-
+    private String templateName;
+    private String locale;
 }
