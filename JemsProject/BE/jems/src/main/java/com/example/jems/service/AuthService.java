@@ -6,17 +6,22 @@ import com.example.jems.dto.AuthRequest;
 import com.example.jems.entity.User;
 import com.example.jems.repository.UserRepository;
 import com.example.jems.util.JwtUtil;
+
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @Service
 @RequiredArgsConstructor
+@ControllerAdvice
 public class AuthService {
 
     @Autowired
@@ -30,20 +35,25 @@ public class AuthService {
 
     // ログイン処理
     public AuthResponse authenticate(AuthRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()));
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()));
 
-        User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+            User user = userRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            String accessToken = jwtUtil.generateToken(user);
-            String refreshToken = jwtUtil.generateRefreshToken(user);
-            return new AuthResponse(accessToken, refreshToken);
-        } else {
-            throw new BadCredentialsException("Bad credentials");
+            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                String accessToken = jwtUtil.generateToken(user);
+                String refreshToken = jwtUtil.generateRefreshToken(user);
+                return new AuthResponse(accessToken, refreshToken);
+            } else {
+                throw new BadCredentialsException("Bad credentials");
+            }
+        } catch (BadCredentialsException ex) {
+            // 認証失敗時の処理
+            throw new RuntimeException("Invalid credentials", ex);
         }
     }
 

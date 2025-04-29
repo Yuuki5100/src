@@ -2,6 +2,7 @@ package com.example.jems;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -9,16 +10,10 @@ public class DemoApplication {
 
 		SpringApplication.run(DemoApplication.class, args);
 
-		// //ユーザ作成しとく
-		// System.out.println("テストユーザ作成するぜい");
-		// User user = new User();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = "password123";
+        String encodedPassword = encoder.encode(rawPassword);
 
-		// user.setUsername("mirei");
-		// user.setPassword("mirei");
-		// user.setEmail("mirei@example-co.jp");
-		// user.setRole("ADMIN");
-
-		// UserService userService = new UserService();
-		// userService.register(user);
+        System.out.println("Encoded password: " + encodedPassword);
 	}
 }
