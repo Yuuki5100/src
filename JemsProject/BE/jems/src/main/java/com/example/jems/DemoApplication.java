@@ -10,10 +10,10 @@ public class DemoApplication {
 
 		SpringApplication.run(DemoApplication.class, args);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "password123";
-        String encodedPassword = encoder.encode(rawPassword);
+        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        // String rawPassword = "password123";
+        // String encodedPassword = encoder.encode(rawPassword);
 
-        System.out.println("Encoded password: " + encodedPassword);
+        // System.out.println("Encoded password: " + encodedPassword);
 	}
 }

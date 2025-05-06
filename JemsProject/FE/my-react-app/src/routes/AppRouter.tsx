@@ -11,7 +11,7 @@ import UserRoleEditPage from '../pages/UserRoleEditPage';
 import ModerationPage from '../pages/ModerationPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
 import NotFoundPage from '../pages/NotFoundPage';
-
+import ErrorCodePage from '../pages/ErrorCodePage';
 
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from '../components/AdminRoute';
@@ -55,6 +55,13 @@ const AppRouter: React.FC = () => {
         </PrivateRoute>
       }
     />
+
+    {/* エラーコードページ編集） */}
+    <Route path="/user/error-codes"
+           element={
+            <PrivateRoute>
+              <ErrorCodePage />
+            </PrivateRoute>} />
 
     {/* ユーザー編集（管理者のみ） */}
     <Route

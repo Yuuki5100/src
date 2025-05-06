@@ -1,33 +1,45 @@
-// apiEndpoint.ts
-
+// apiEndPoint.ts
 import axiosClient from "../lib/axiosClient";
 
-type EndpointType = "home" | "profile" | "settings";
+export type EndpointType =
+  | "home"
+  | "profile"
+  | "settings"
+  | "errorcodes"
+  | "reload";
 
-const baseUrl = "http://localhost:8080"; // バックエンドの基本URL
+const baseUrl = "http://localhost:8080";
 
-// 各エンドポイントのパスを管理するオブジェクト
-const endpointPaths: Record<EndpointType, string> = {
+export const endpointPaths: Record<EndpointType, string> = {
   home: "/user/home",
   profile: "/user/profile",
   settings: "/user/settings",
+  errorcodes: "/user/error-codes",
+  reload: "/user/error-codes/reload",
 };
 
-// リクエストを投げる関数
+export const endpointMethods: Record<EndpointType, "GET" | "POST"> = {
+  home: "GET",
+  profile: "POST",
+  settings: "POST",
+  errorcodes: "GET",
+  reload: "GET",
+};
+
 export const fetchApi = async (endpoint: EndpointType) => {
-  const url = baseUrl + endpointPaths[endpoint]; // エンドポイントURLを決定
-  const method = endpoint === "home" ? "GET" : "POST"; // 例として、homeはGET、それ以外はPOST
+  const url = baseUrl + endpointPaths[endpoint];
+  const method = endpointMethods[endpoint];
 
   try {
     const response = await axiosClient({
-      method, 
-      url, 
+      method,
+      url,
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     });
 
-    return response.data; // axiosのレスポンスは response.data に格納されている
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/error-codes")
+@RequestMapping("user/error-codes")
 public class ErrorCodeSettingController {
 
     @Autowired

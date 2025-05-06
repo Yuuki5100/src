@@ -17,8 +17,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => (
     <nav>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         <li><Link to="/">ホーム</Link></li>
-        <li><Link to="/users/search">ユーザー検索</Link></li>
-        <li><Link to="/admin/dashboard">管理ダッシュボード</Link></li>
+        <li><Link to="/search">ユーザー検索</Link></li>
+        <li><Link to="/user/error-codes">エラーコード設定</Link></li>
+        <li><Link to="admin/dashboard">管理ダッシュボード</Link></li>
+        
       </ul>
     </nav>
   </aside>
