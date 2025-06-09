@@ -1,5 +1,6 @@
 package com.example.jems.controller;
 
+import com.example.jems.model.ErrorCodeRequest;
 import com.example.jems.model.ErrorCodeSettingModel;
 import com.example.jems.service.ErrorCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +44,9 @@ public class ErrorCodeSettingController {
     @PutMapping("/{code}")
     public ResponseEntity<ErrorCodeSettingModel> updateErrorCodeMessage(
             @PathVariable String code,
-            @RequestParam String locale,
-            @RequestBody Map<String, String> requestBody) {
+            @RequestBody ErrorCodeRequest request) {
 
-        String newMessage = requestBody.get("newMessage");
-        Optional<ErrorCodeSettingModel> updated = errorCodeService.updateMessage(code, locale, newMessage);
+        Optional<ErrorCodeSettingModel> updated = errorCodeService.updateMessage(code, request.getLocale(), request.getMessage());
         return updated.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
