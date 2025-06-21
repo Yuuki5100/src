@@ -1,0 +1,138 @@
+stages:
+  - build
+  - test
+  - migrate-db
+  - deploy
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  NODE_ENV: "production"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .m2/repository
+    - FE/spa-next/my-next-app/node_modules
+
+# =====================
+# Build & Test Backend
+# =====================
+backend:
+  stage: build
+  image: maven:3.9.4-eclipse-temurin-17
+  script:
+    - cd BE
+    - mvn -B clean install -DskipTests
+  tags:
+    - docker-runner
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "release_uat"'
+      when: always
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
+      when: always
+
+backend-test:
+  stage: test
+  image: maven:3.9.4-eclipse-temurin-17
+  script:
+    - mvn -f BE/pom.xml test
+  tags:
+    - docker-runner
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "release_uat"'
+      when: always
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
+      when: always
+
+# =====================
+# Frontend build & lint
+# =====================
+build-frontend:
+  stage: build
+  image: node:20
+  script:
+    - cd FE/spa-next/my-next-app
+    - npm install  # or npm install （package-lock.json がない場合）
+    - npm run build
+  tags:
+    - docker-runner
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "release_uat"'
+      when: always
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
+      when: always
+
+frontend-lint:
+  stage: test
+  image: node:20
+  script:
+    - cd FE/spa-next/my-next-app
+    - npm ci
+    - npm run lint
+  tags:
+    - docker-runner
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "release_uat"'
+      when: always
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
+      when: always
+
+# =====================
+# Flyway Migration
+# =====================
+migrate-db:
+  stage: migrate-db
+  image: maven:3.9.4-eclipse-temurin-17
+  script:
+    - mvn -f BE/servercommon/pom.xml flyway:migrate -Dflyway.configFiles=ci-config/flyway-uat.conf
+  tags:
+    - docker-runner
+  only:
+    - release_uat
+
+# =====================
+# Deploy
+# =====================
+deploy-staging:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H your.ec2.host.com >> ~/.ssh/known_hosts
+  script:
+    - scp BE/appserver/target/appserver.jar user@your.ec2.host.com:/home/app/gitlab-runner/backend/appserver/appserver.new.jar
+    - scp BE/batchserver/target/batchserver.jar user@your.ec2.host.com:/home/app/gitlab-runner/backend/batchserver/batchserver.new.jar
+    - scp BE/gateway/target/gateway.jar user@your.ec2.host.com:/home/app/gitlab-runner/backend/gateway/gateway.new.jar
+    - cd FE/spa-next/my-next-app && tar czf next-build.tar.gz .next public
+    - scp next-build.tar.gz user@your.ec2.host.com:/home/app/gitlab-runner/frontend/my-next-app/
+    - ssh user@your.ec2.host.com 'cd /home/app/gitlab-runner/frontend/my-next-app && tar xzf next-build.tar.gz && rm next-build.tar.gz'
+    - scp ci-config/.env.uat user@your.ec2.host.com:/home/app/gitlab-runner/frontend/my-next-app/.env
+    - ssh user@your.ec2.host.com <<EOF
+        echo "SENTRY_DSN=$SENTRY_DSN" >> /home/app/gitlab-runner/frontend/my-next-app/.env
+        echo "JWT_SECRET=$JWT_SECRET" >> /home/app/gitlab-runner/frontend/my-next-app/.env
+      EOF
+    - ssh user@your.ec2.host.com "bash /home/app/gitlab-runner/deploy-scripts/staging.sh"
+  tags:
+    - docker-runner
+  only:
+    - release_uat
+
+rollback-staging:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H your.ec2.host.com >> ~/.ssh/known_hosts
+  script:
+    - ssh user@your.ec2.host.com "bash /home/app/gitlab-runner/deploy-scripts/rollback.sh"
+  tags:
+    - docker-runner
+  when: manual
+  only:
+    - release_uat
