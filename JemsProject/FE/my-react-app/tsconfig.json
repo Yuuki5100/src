@@ -7,7 +7,12 @@
     "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // ここを追加
+    "baseUrl": "src",
+    "paths": {
+      "@utils/*": ["utils/*"],
+    }
   },
   "include": ["src"]
 }
